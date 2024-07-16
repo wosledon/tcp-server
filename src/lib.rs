@@ -29,7 +29,10 @@ pub mod tcp_server {
 
     impl TcpServer {
         pub fn new(host: String, port: i32) -> Self {
-            let listener = TcpListener::bind(format!("{}:{}", host, port)).expect("Failed to bind");
+            let listener = TcpListener::bind(format!("{}:{}", host, port))
+                .expect(format!("Failed to bind {}:{}", host, port).as_str());
+
+            println!("[server]-[info]: tcp listening on {}:{}", host, port);
 
             let clients = Arc::new(Mutex::new(Vec::new()));
             Self {
